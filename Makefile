@@ -69,18 +69,18 @@ DEP_FILES			:=	$(strip $(addsuffix .dep,$(OUT_ES_FILES) $(OUT_LESS_FILES)))
 OUT_DIRS			:=	$(strip $(sort $(dir $(OUT_FILES) $(BUILD_DIR)/)))
 
 ifneq ($(OUT_FILES_SVG),)
-TARGET_FILES_SVG	:=	$(TARGET)/out.min.svg
+TARGET_FILES_SVG	:=	out.min.svg
 endif # OUT_FILES_SVG
 ifneq ($(OUT_FILES_CSS),)
-TARGET_FILES_CSS	:=	$(TARGET)/out.min.css
+TARGET_FILES_CSS	:=	out.min.css
 ifdef DEBUG
-TARGET_FILES_CSS	+=	$(TARGET)/out.debug.css
+TARGET_FILES_CSS	+=	out.debug.css
 endif # DEBUG
 endif # OUT_FILES_CSS
 ifneq ($(OUT_FILES_JS),)
-TARGET_FILES_JS		:=	$(TARGET)/out.min.js
+TARGET_FILES_JS		:=	out.min.js
 ifdef DEBUG
-TARGET_FILES_JS		+=	$(TARGET)/out.debug.js
+TARGET_FILES_JS		+=	out.debug.js
 endif # DEBUG
 endif # OUT_FILES_JS
 TARGET_FILES		:=	$(TARGET_FILES_SVG) $(TARGET_FILES_CSS) $(TARGET_FILES_JS)
@@ -145,10 +145,10 @@ default: target
 report: $(TARGET_FILES)
 	@echo \
 		"[JS_RAW]  GZIP: `$(call GZIP_SIZE,$(BUILD_DIR)/all.js 2>/dev/null)` MINIFY: N/A	ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.js 2>/dev/null)`\n" \
-		"[JS_DEBUG]  GZIP: `$(call GZIP_SIZE,$(TARGET)/out.debug.js 2>/dev/null)` MINIFY: `$(call SIZE,$(TARGET)/out.debug.js 2>/dev/null)`*	ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.debug.js 2>/dev/null)`\n" \
-		"[JS_RELEASE]  GZIP: `$(call GZIP_SIZE,$(TARGET)/out.min.js 2>/dev/null)`   MINIFY: `$(call SIZE,$(TARGET)/out.min.js 2>/dev/null)`    ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.release.js 2>/dev/null)`\n" \
-		"[CSS]     GZIP: `$(call GZIP_SIZE,$(TARGET)/out.min.css 2>/dev/null)`  MINIFY: `$(call SIZE,$(TARGET)/out.min.css 2>/dev/null)`	ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.css 2>/dev/null)`\n" \
-		"[SVG]     GZIP: `$(call GZIP_SIZE,$(TARGET)/out.min.svg 2>/dev/null)`  MINIFY: `$(call SIZE,$(TARGET)/out.min.svg 2>/dev/null)`	ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.svg 2>/dev/null)`\n" \
+		"[JS_DEBUG]  GZIP: `$(call GZIP_SIZE,out.debug.js 2>/dev/null)` MINIFY: `$(call SIZE,out.debug.js 2>/dev/null)`*	ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.debug.js 2>/dev/null)`\n" \
+		"[JS_RELEASE]  GZIP: `$(call GZIP_SIZE,out.min.js 2>/dev/null)`   MINIFY: `$(call SIZE,out.min.js 2>/dev/null)`    ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.release.js 2>/dev/null)`\n" \
+		"[CSS]     GZIP: `$(call GZIP_SIZE,out.min.css 2>/dev/null)`  MINIFY: `$(call SIZE,out.min.css 2>/dev/null)`	ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.css 2>/dev/null)`\n" \
+		"[SVG]     GZIP: `$(call GZIP_SIZE,out.min.svg 2>/dev/null)`  MINIFY: `$(call SIZE,out.min.svg 2>/dev/null)`	ORIGINAL: `$(call SIZE,$(BUILD_DIR)/all.svg 2>/dev/null)`\n" \
 		| column -t
 
 # Dir Rules #
@@ -227,11 +227,11 @@ $(BUILD_DIR)/all.js: $(BUILD_DIR)/js.js $(BUILD_DIR)/buble.js
 	cat $^ > $@
 $(BUILD_DIR)/all.release.js: $(BUILD_DIR)/all.js
 	$(call JS_PP_RELEASE,$<,$@)
-$(TARGET)/out.min.js: $(BUILD_DIR)/all.release.js
+out.min.js: $(BUILD_DIR)/all.release.js
 	$(call MINIFY_JS,$<,$@)
 $(BUILD_DIR)/all.debug.js: $(BUILD_DIR)/all.js
 	$(call JS_PP_DEBUG,$<,$@)
-$(TARGET)/out.debug.js: $(BUILD_DIR)/all.debug.js
+out.debug.js: $(BUILD_DIR)/all.debug.js
 	cp -f --remove-destination $< $@
 
 #	$(call JS_PP_DEBUG,$<,$(@D)/all.debug.js)
@@ -258,9 +258,9 @@ else
 endif # $(OUT_LESS_FILES)
 $(BUILD_DIR)/all.css: $(BUILD_DIR)/css.css $(BUILD_DIR)/less.css
 	cat $^ > $@
-$(TARGET)/out.min.css: $(BUILD_DIR)/all.css
+out.min.css: $(BUILD_DIR)/all.css
 	$(call MINIFY_CSS,$<,$@)
-$(TARGET)/out.debug.css: $(BUILD_DIR)/all.css
+out.debug.css: $(BUILD_DIR)/all.css
 	cp -f --remove-destination $< $@
 
 #ifdef DEBUG
@@ -276,7 +276,7 @@ $(BUILD_DIR)/svg.svg: $(OUT_SVG_FILES)
 	# NOTE: needs to work like this, 'cause SVG_PACK outputs to stdout. Otherwise we wont stop on SVG errors
 $(BUILD_DIR)/all.svg: $(BUILD_DIR)/svg.svg
 	cat $^ > $@
-$(TARGET)/out.min.svg: $(BUILD_DIR)/all.svg
+out.min.svg: $(BUILD_DIR)/all.svg
 	$(call MINIFY_SVG,$<,$@)
 
 
