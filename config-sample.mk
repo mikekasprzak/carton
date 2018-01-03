@@ -1,0 +1,3 @@
+JOBS=2
+#DEBUG=true
+#SOURCEMAPS=true
