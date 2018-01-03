@@ -9,7 +9,6 @@ CARTON_DIR			:= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 # Settings #
 ROOT				?=	../
 OUT					?=	.output
-.BUILD				?=	.build
 NODEJS				?=	$(CARTON_DIR)/node_modules
 
 # if JOBS are specified in config.mk, then use that to start a parallel build
@@ -29,12 +28,13 @@ endif # SOURCEMAPS
 # Input Dirs (modified by recursive scripts) #
 INPUT_DIRS			?=	$(TARGET)/src/
 INPUT_DIRS			:=	$(addprefix $(ROOT),$(INPUT_DIRS))
-BUILD_DIR			:=	$(OUT)/$(.BUILD)
+BUILD_DIR			:=	$(OUT)/.build
 
 # Functions (must use '=', and not ':=') #
 REMOVE_UNDERSCORE	=	$(foreach v,$(1),$(if $(findstring /_,$(v)),,$(v)))
 #USE_INCLUDES		=	$(filter $(addsuffix %,$(dir $(INPUT_DIRS))),$(1))
-FIND_FILE			=	$(call REMOVE_UNDERSCORE,$(call USE_INCLUDES,$(shell find $(1) -name '$(2)')))
+#FIND_FILE			=	$(call REMOVE_UNDERSCORE,$(call USE_INCLUDES,$(shell find $(1) -name '$(2)')))
+FIND_FILE			=	$(call REMOVE_UNDERSCORE,$(shell find $(1) -name '$(2)'))
 # NOTE: My standard build tree rule is to ignore any file/dir prefixed with an underscore #
 
 # Files #
@@ -286,6 +286,8 @@ target: $(OUT_DIRS) $(BUILD_DIR)/buble.lint $(BUILD_DIR)/less.lint $(TARGET_FILE
 info:
 	@echo "ROOT: $(ROOT)"
 	@echo "OUT: $(OUT)"
+	@echo ""
+	@echo "INPUT_DIRS: $(INPUT_DIRS)"
 	@echo ""
 	@echo "SVG: $(SVG_FILES)"
 	@echo "LESS: $(LESS_FILES)"
