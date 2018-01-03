@@ -209,7 +209,7 @@ clean-js:
 	-$(call RM_EMPTY_DIRS,.output)
 
 
-OUT_MAIN_JS			:=	$(addprefix $(OUT)/,$(MAIN_JS:.js=.es.js)))
+OUT_MAIN_JS			:=	$(addprefix $(OUT)/,$(MAIN_JS:.js=.es.js))
 
 
 # JavaScript #
