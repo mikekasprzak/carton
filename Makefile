@@ -73,7 +73,9 @@ OUT_FILES			:=	$(OUT_FILES_SVG) $(OUT_FILES_CSS) $(OUT_FILES_JS)
 DEP_FILES			:=	$(addsuffix .dep,$(OUT_ES_FILES) $(OUT_LESS_FILES))
 OUT_FOLDERS			:=	$(sort $(dir $(OUT_FILES) $(BUILD_FOLDER)/))
 
+ifneq ($(SVG_FILES),)
 TARGET_FILES_SVG	:=	$(TARGET_FOLDER)/out.min.svg
+endif # SVG_FILES
 TARGET_FILES_CSS	:=	$(TARGET_FOLDER)/out.min.css
 TARGET_FILES_JS		:=	$(TARGET_FOLDER)/out.min.js
 ifdef DEBUG
@@ -165,9 +167,7 @@ clean-lint:
 
 
 $(BUILD_FOLDER)/buble.lint: $(ES_FILES)
-ifneq ($(ES_FILES),)
 	$(call ESLINT,$?)
-endif # ES_FILES
 	@touch $@
 
 
