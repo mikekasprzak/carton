@@ -124,7 +124,7 @@ LESS				=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) $(LESS_ARGS) $(1) $(2)
 # CSS Minifier: https://github.com/jakubpawlowicz/clean-css/
 MINIFY_CSS			=	cat $(1) | $(NODEJS)/clean-css-cli/bin/cleancss -o $(2)
 # CSS Linter: http://stylelint.io/
-STYLELINT_ARGS		:=	--syntax less --config $(CARTON_DIR)/config/.stylelintrc --config-basedir ../../
+STYLELINT_ARGS		:=	--syntax less --config $(CARTON_DIR)/config/.stylelintrc
 STYLELINT			=	$(NODEJS)/stylelint/bin/stylelint.js $(1) $(STYLELINT_ARGS)
 
 # SVG "Compiler", same as the minifier: https://github.com/svg/svgo

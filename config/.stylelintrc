@@ -5,6 +5,7 @@
 		"block-no-empty": null,
 		"no-eol-whitespace": true,
 		"no-extra-semicolons": true,
+		"no-empty-source": null,
 		"rule-empty-line-before": [
 			"always", {
 				"except": ["first-nested"],
