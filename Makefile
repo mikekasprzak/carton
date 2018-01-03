@@ -248,10 +248,14 @@ $(TARGET_FOLDER)/out.debug.js: $(BUILD_FOLDER)/all.debug.js
 $(BUILD_FOLDER)/css.css: $(OUT_CSS_FILES)
 ifneq ($(OUT_CSS_FILES),)
 	cat $^ > $@
+else
+	touch $@
 endif # $(OUT_CSS_FILES)
 $(BUILD_FOLDER)/less.css: $(OUT_LESS_FILES)
 ifneq ($(OUT_LESS_FILES),)
 	cat $^ > $@
+else
+	touch $@
 endif # $(OUT_LESS_FILES)
 $(BUILD_FOLDER)/all.css: $(BUILD_FOLDER)/css.css $(BUILD_FOLDER)/less.css
 	cat $^ > $@
