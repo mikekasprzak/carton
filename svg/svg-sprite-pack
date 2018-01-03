@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-include __DIR__.'/../external/SimpleDOM/SimpleDOM.php';
+include __DIR__.'/SimpleDOM.php';
 
 $id_prefix = "icon-";
 
@@ -43,11 +43,11 @@ foreach ( $in_files as $file ) {
 	@$xml = simpledom_load_file($file);
 	if ( $xml === false ) {
 		error_log("ERROR: Problem reading \"".$file."\"");
-		exit(1);	
+		exit(1);
 	}
-	
+
 	$title = (string)$xml->title;
-	
+
 	if ( $title === "" ) {
 		error_log("ERROR: \"".$file."\" has no title");
 		exit(1);
@@ -57,13 +57,13 @@ foreach ( $in_files as $file ) {
 		exit(1);
 	}
 	$all_titles[$title] = $file;
-	
+
 	$child = $out->addChild('symbol');
 	$child->setAttributes([
 		'id' => $id_prefix.$title,
 		'viewBox' => (string)$xml->attributes()->viewBox
 	]);
-	
+
 	$child->cloneChildrenFrom($xml,true);
 }
 
