@@ -10,7 +10,7 @@ CARTON_DIR			:= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 SRC					?=	src
 OUT					?=	.output
 .BUILD				?=	.build
-NODEJS				?=	node_modules
+NODEJS				?=	$(CARTON_DIR)/node_modules
 
 ## Use 'TARGET=public-ludumdare.com' if you want to build a specific build (such as public-ludumdare.com) #
 #ifneq ($(strip $(TARGET)),)
