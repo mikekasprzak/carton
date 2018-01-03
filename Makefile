@@ -69,7 +69,7 @@ OUT_SVG_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(SVG_FILES:.svg=.min.svg))
 OUT_FILES_SVG		:=	$(OUT_SVG_FILES)
 OUT_FILES_CSS		:=	$(OUT_CSS_FILES) $(OUT_LESS_FILES)
 OUT_FILES_JS		:=	$(OUT_JS_FILES) $(OUT_ES_FILES)
-OUT_FILES			:=	 $(OUT_FILES_JS)
+OUT_FILES			:=	$(OUT_FILES_SVG) $(OUT_FILES_CSS) $(OUT_FILES_JS)
 DEP_FILES			:=	$(addsuffix .dep,$(OUT_ES_FILES) $(OUT_LESS_FILES))
 OUT_FOLDERS			:=	$(sort $(dir $(OUT_FILES) $(BUILD_FOLDER)/))
 
@@ -165,8 +165,11 @@ clean-lint:
 
 
 $(BUILD_FOLDER)/buble.lint: $(ES_FILES)
+ifneq ($(ES_FILES),)
 	$(call ESLINT,$?)
+endif # ES_FILES
 	@touch $@
+
 
 $(BUILD_FOLDER)/less.lint: $(LESS_FILES)
 	$(call STYLELINT,$?)
