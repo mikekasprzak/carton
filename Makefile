@@ -279,6 +279,9 @@ target: $(OUT_FOLDERS) $(BUILD_FOLDER)/buble.lint $(BUILD_FOLDER)/less.lint $(TA
 
 
 info:
+	@echo "SRC: $(SRC)"
+	@echo "OUT: $(OUT)"
+	@echo ""
 	@echo "SVG: $(SVG_FILES)"
 	@echo "LESS: $(LESS_FILES)"
 	@echo "CSS: $(CSS_FILES)"
