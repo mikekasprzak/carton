@@ -66,22 +66,28 @@ OUT_LESS_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(LESS_FILES:.less=.less.css))
 OUT_CSS_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(CSS_FILES:.css=.o.css))
 OUT_SVG_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(SVG_FILES:.svg=.min.svg))
 
-OUT_FILES_SVG		:=	$(OUT_SVG_FILES)
-OUT_FILES_CSS		:=	$(OUT_CSS_FILES) $(OUT_LESS_FILES)
-OUT_FILES_JS		:=	$(OUT_JS_FILES) $(OUT_ES_FILES)
-OUT_FILES			:=	$(OUT_FILES_SVG) $(OUT_FILES_CSS) $(OUT_FILES_JS)
-DEP_FILES			:=	$(addsuffix .dep,$(OUT_ES_FILES) $(OUT_LESS_FILES))
-OUT_FOLDERS			:=	$(sort $(dir $(OUT_FILES) $(BUILD_FOLDER)/))
+OUT_FILES_SVG		:=	$(strip $(OUT_SVG_FILES))
+OUT_FILES_CSS		:=	$(strip $(OUT_CSS_FILES) $(OUT_LESS_FILES))
+OUT_FILES_JS		:=	$(strip $(OUT_JS_FILES) $(OUT_ES_FILES))
+OUT_FILES			:=	$(strip $(OUT_FILES_SVG) $(OUT_FILES_CSS) $(OUT_FILES_JS))
+DEP_FILES			:=	$(strip $(addsuffix .dep,$(OUT_ES_FILES) $(OUT_LESS_FILES)))
+OUT_FOLDERS			:=	$(strip $(sort $(dir $(OUT_FILES) $(BUILD_FOLDER)/)))
 
-ifneq ($(SVG_FILES),)
+ifneq ($(OUT_FILES_SVG),)
 TARGET_FILES_SVG	:=	$(TARGET_FOLDER)/out.min.svg
-endif # SVG_FILES
+endif # OUT_FILES_SVG
+ifneq ($(OUT_FILES_CSS),)
 TARGET_FILES_CSS	:=	$(TARGET_FOLDER)/out.min.css
-TARGET_FILES_JS		:=	$(TARGET_FOLDER)/out.min.js
 ifdef DEBUG
 TARGET_FILES_CSS	+=	$(TARGET_FOLDER)/out.debug.css
+endif # DEBUG
+endif # OUT_FILES_CSS
+ifneq ($(OUT_FILES_JS),)
+TARGET_FILES_JS		:=	$(TARGET_FOLDER)/out.min.js
+ifdef DEBUG
 TARGET_FILES_JS		+=	$(TARGET_FOLDER)/out.debug.js
 endif # DEBUG
+endif # OUT_FILES_JS
 TARGET_FILES		:=	$(TARGET_FILES_SVG) $(TARGET_FILES_CSS) $(TARGET_FILES_JS)
 
 
