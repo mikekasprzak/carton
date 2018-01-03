@@ -37,7 +37,7 @@ endif # SOURCEMAPS
 #INCLUDE_FOLDERS		+=	src/compat/
 #endif # INCLUDE_FOLDERS
 INCLUDE_FOLDERS		?=	$(TARGET)/src/
-INCLUDE_FOLDERS		:=	$(addprefix $(ROOT),$INCLUDE_FOLDERS)
+INCLUDE_FOLDERS		:=	$(addprefix $(ROOT),$(INCLUDE_FOLDERS))
 BUILD_FOLDER		:=	$(OUT)/$(.BUILD)
 
 # Functions (must use '=', and not ':=') #
