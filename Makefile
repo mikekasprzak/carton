@@ -124,8 +124,8 @@ LESS				=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) $(LESS_ARGS) $(1) $(2)
 # CSS Minifier: https://github.com/jakubpawlowicz/clean-css/
 MINIFY_CSS			=	cat $(1) | $(NODEJS)/clean-css-cli/bin/cleancss -o $(2)
 # CSS Linter: http://stylelint.io/
-STYLELINT_ARGS			:=	--syntax less --config $(CARTON_DIR)/config/.stylelintrc --config-basedir ../../
-STYLELINT				=	$(NODEJS)/stylelint/bin/stylelint.js $(1) $(STYLELINT_ARGS)
+STYLELINT_ARGS		:=	--syntax less --config $(CARTON_DIR)/config/.stylelintrc --config-basedir ../../
+STYLELINT			=	$(NODEJS)/stylelint/bin/stylelint.js $(1) $(STYLELINT_ARGS)
 
 # SVG "Compiler", same as the minifier: https://github.com/svg/svgo
 SVGO_ARGS			:=	-q --disable=removeTitle --disable=removeDimensions --disable=removeViewBox
@@ -246,9 +246,13 @@ $(TARGET_FOLDER)/out.debug.js: $(BUILD_FOLDER)/all.debug.js
 
 # CSS #
 $(BUILD_FOLDER)/css.css: $(OUT_CSS_FILES)
+ifneq ($(OUT_CSS_FILES),)
 	cat $^ > $@
+endif # $(OUT_CSS_FILES)
 $(BUILD_FOLDER)/less.css: $(OUT_LESS_FILES)
+ifneq ($(OUT_LESS_FILES),)
 	cat $^ > $@
+endif # $(OUT_LESS_FILES)
 $(BUILD_FOLDER)/all.css: $(BUILD_FOLDER)/css.css $(BUILD_FOLDER)/less.css
 	cat $^ > $@
 $(TARGET_FOLDER)/out.min.css: $(BUILD_FOLDER)/all.css
