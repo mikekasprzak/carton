@@ -42,17 +42,17 @@ BUILD_FOLDER		:=	$(OUT)/$(.BUILD)
 
 # Functions (must use '=', and not ':=') #
 REMOVE_UNDERSCORE	=	$(foreach v,$(1),$(if $(findstring /_,$(v)),,$(v)))
-INCLUDE_INCLUDES	=	$(filter $(addsuffix %,$(dir $(INCLUDE_FOLDERS))),$(1))
-FIND_FILE			=	$(call REMOVE_UNDERSCORE,$(call INCLUDE_INCLUDES,$(shell find $(1) -name '$(2)')))
+#USE_INCLUDES		=	$(filter $(addsuffix %,$(dir $(INCLUDE_FOLDERS))),$(1))
+FIND_FILE			=	$(call REMOVE_UNDERSCORE,$(call USE_INCLUDES,$(shell find $(1) -name '$(2)')))
 # NOTE: My standard build tree rule is to ignore any file/folder prefixed with an underscore #
 
 # Files #
-ALL_JS_FILES		:=	$(filter-out %.min.js,$(call FIND_FILE,$(ROOT),*.js))
-ALL_LESS_FILES		:=	$(filter-out %.min.less,$(call FIND_FILE,$(ROOT),*.less))
-ALL_CSS_FILES		:=	$(filter-out %.min.css,$(call FIND_FILE,$(ROOT),*.css))
-ALL_SVG_FILES		:=	$(filter-out %.min.svg,$(call FIND_FILE,$(ROOT),*.svg))
+ALL_JS_FILES		:=	$(filter-out %.min.js,$(call FIND_FILE,$(INCLUDE_FOLDERS),*.js))
+ALL_LESS_FILES		:=	$(filter-out %.min.less,$(call FIND_FILE,$(INCLUDE_FOLDERS),*.less))
+ALL_CSS_FILES		:=	$(filter-out %.min.css,$(call FIND_FILE,$(INCLUDE_FOLDERS),*.css))
+ALL_SVG_FILES		:=	$(filter-out %.min.svg,$(call FIND_FILE,$(INCLUDE_FOLDERS),*.svg))
 
-ALL_ESIGNORE_FILES	:=	$(call FIND_FILE,$(ROOT),.esignore)
+ALL_ESIGNORE_FILES	:=	$(call FIND_FILE,$(INCLUDE_FOLDERS),.esignore)
 ESIGNORE_FOLDERS	:=	$(addsuffix %,$(dir $(ALL_ESIGNORE_FILES)))
 
 # Transforms #
