@@ -272,8 +272,15 @@ target: $(OUT_FOLDERS) $(BUILD_FOLDER)/buble.lint $(BUILD_FOLDER)/less.lint $(TA
 	@echo "[-] Done \"$(subst /,,$(TARGET))\""
 
 
+info:
+	@echo "SVG: $(SVG_FILES)"
+	@echo "LESS: $(LESS_FILES)"
+	@echo "CSS: $(CSS_FILES)"
+	@echo "ES: $(ES_FILES)"
+	@echo "JS: $(JS_FILES)"
+
 # Phony Rules #
-.PHONY: default build target all clean clean-all clean-target clean-lint clean-svg clean-css clean-js clean-all-svg clean-all-css clean-all-js lint lint-all lint-svg lint-css lint-js lint-php lint-all-svg lint-all-css lint-all-js lint-all-php fail report $(BUILDS)
+.PHONY: default info build target all clean clean-all clean-target clean-lint clean-svg clean-css clean-js clean-all-svg clean-all-css clean-all-js lint lint-all lint-svg lint-css lint-js lint-php lint-all-svg lint-all-css lint-all-js lint-all-php fail report $(BUILDS)
 
 
 # Dependencies #
