@@ -78,7 +78,7 @@ TARGET_FILES_CSS	+=	out.debug.css
 endif # DEBUG
 endif # OUT_FILES_CSS
 ifneq ($(OUT_FILES_JS),)
-TARGET_FILES_JS		:=	out.min.js
+TARGET_FILES_JS		:=	out.min.js out.min.js.map
 ifdef DEBUG
 TARGET_FILES_JS		+=	out.debug.js
 endif # DEBUG
@@ -226,6 +226,7 @@ $(BUILD_DIR)/all.js: $(BUILD_DIR)/js.js $(BUILD_DIR)/buble.js
 	cat $^ > $@
 $(BUILD_DIR)/all.release.js: $(BUILD_DIR)/all.js
 	$(call JS_PP_RELEASE,$<,$@)
+out.min.js.map: out.min.js
 out.min.js: $(BUILD_DIR)/all.release.js
 	$(call MINIFY_JS,$<,$@)
 $(BUILD_DIR)/all.debug.js: $(BUILD_DIR)/all.js
