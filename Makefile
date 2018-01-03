@@ -28,7 +28,8 @@ endif # SOURCEMAPS
 # Input Dirs (modified by recursive scripts) #
 INPUT_DIRS			?=	$(TARGET)/src/
 INPUT_DIRS			:=	$(addprefix $(ROOT),$(INPUT_DIRS))
-ESLINT_IGNORE		:=	$(addprefix $(ROOT),$(ESLINT_IGNORE))
+JS_LINT_IGNORE		:=	$(addprefix $(ROOT),$(JS_LINT_IGNORE) $(LINT_IGNORE))
+CSS_LINT_IGNORE		:=	$(addprefix $(ROOT),$(CSS_LINT_IGNORE) $(LINT_IGNORE))
 BUILD_DIR			:=	$(OUT)/.build
 
 # Functions (must use '=', and not ':=') #
@@ -166,12 +167,12 @@ clean-lint:
 	rm -fr $(BUILD_DIR)/buble.lint $(BUILD_DIR)/less.lint
 
 
-$(BUILD_DIR)/buble.lint: $(filter-out $(addsuffix %,$(ESLINT_IGNORE)),$(ES_FILES))
+$(BUILD_DIR)/buble.lint: $(filter-out $(addsuffix %,$(JS_LINT_IGNORE)),$(ES_FILES))
 	$(call ESLINT,$?)
 	@touch $@
 
 
-$(BUILD_DIR)/less.lint: $(LESS_FILES)
+$(BUILD_DIR)/less.lint: $(filter-out $(addsuffix %,$(CSS_LINT_IGNORE)),$(LESS_FILES))
 ifneq ($(LESS_FILES),)
 	$(call STYLELINT,$?)
 endif # ES_FILES
