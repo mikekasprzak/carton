@@ -7,7 +7,7 @@ export default {
 	'plugins': [
 		includePaths({
 			'paths': [
-				'../external'
+				'.output/external'
 			],
 			'extensions': ['.es.js'],
 		}),
