@@ -86,7 +86,7 @@ TARGET_FILES		:=	$(TARGET_FILES_SVG) $(TARGET_FILES_CSS) $(TARGET_FILES_JS)
 # Tools #
 
 # Ecmascript Linter: http://eslint.org/
-ESLINT_ARGS			:=	--config src/config/eslint.config.json
+ESLINT_ARGS			:=	--config $(CARTON_DIR)/config/eslint.config.json
 ESLINT				=	$(NODEJS)/eslint/bin/eslint.js $(1) $(ESLINT_ARGS)
 # ES Compiler: https://buble.surge.sh/guide/
 BUBLE_ARGS			:=	--no modules --jsx h --objectAssign Object.assign
@@ -95,7 +95,7 @@ BUBLE_ARGS			:=	--no modules --jsx h --objectAssign Object.assign
 #endif # SOURCEMAPS
 BUBLE				=	$(NODEJS)/buble/bin/buble $(BUBLE_ARGS) -i $(1) -o $(2)
 # ES Include/Require Resolver: http://rollupjs.org/guide/
-ROLLUP_ARGS			:=	-c src/config/rollup.config.js
+ROLLUP_ARGS			:=	-c $(CARTON_DIR)/config/rollup.config.js
 ifdef SOURCEMAPS
 ROLLUP_ARGS			+=	-m inline
 endif # SOURCEMAPS
@@ -116,7 +116,7 @@ LESS				=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) $(LESS_ARGS) $(1) $(2)
 # CSS Minifier: https://github.com/jakubpawlowicz/clean-css/
 MINIFY_CSS			=	cat $(1) | $(NODEJS)/clean-css-cli/bin/cleancss -o $(2)
 # CSS Linter: http://stylelint.io/
-STYLELINT_ARGS			:=	--syntax less --config src/config/.stylelintrc --config-basedir ../../
+STYLELINT_ARGS			:=	--syntax less --config $(CARTON_DIR)/config/.stylelintrc --config-basedir ../../
 STYLELINT				=	$(NODEJS)/stylelint/bin/stylelint.js $(1) $(STYLELINT_ARGS)
 
 # SVG "Compiler", same as the minifier: https://github.com/svg/svgo

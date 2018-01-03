@@ -1,0 +1,41 @@
+{
+  "name": "carton",
+  "version": "0.1",
+  "description": "General Toolchain",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "buble": "^0.17.0",
+    "clean-css-cli": "*",
+    "es6": "*",
+    "es6-promise": "*",
+    "eslint": "*",
+    "nodent": "*",
+    "rollup": "*",
+    "rollup-plugin-includepaths": "*",
+    "rollup-plugin-node-resolve": "*",
+    "rollup-plugin-nodent": "*",
+    "uglify-js": "*",
+    "preprocess-cli-tool": "*",
+
+    "less": "*",
+    "less-plugin-autoprefix": "*",
+    "clean-css-cli": "*",
+    "stylelint": "^8.2.0",
+    "stylelint-config-recommended": "^1.0.0",
+
+    "svgo": "*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikekasprzak/carton.git"
+  },
+  "author": "Mike Kasprzak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikekasprzak/carton/issues"
+  }
+}
