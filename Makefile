@@ -7,6 +7,7 @@ CARTON_DIR			:= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 -include $(CARTON_DIR)/config.mk	# Create and use this file to override any of 'Settings' #
 
 # Settings #
+ROOT				?=	../
 SRC					?=	src
 OUT					?=	.output
 .BUILD				?=	.build
@@ -45,12 +46,12 @@ FIND_FILE			=	$(call REMOVE_UNDERSCORE,$(call INCLUDE_INCLUDES,$(shell find $(1)
 # NOTE: My standard build tree rule is to ignore any file/folder prefixed with an underscore #
 
 # Files #
-ALL_JS_FILES		:=	$(filter-out %.min.js,$(call FIND_FILE,$(SRC)/,*.js))
-ALL_LESS_FILES		:=	$(filter-out %.min.less,$(call FIND_FILE,$(SRC)/,*.less))
-ALL_CSS_FILES		:=	$(filter-out %.min.css,$(call FIND_FILE,$(SRC)/,*.css))
-ALL_SVG_FILES		:=	$(filter-out %.min.svg,$(call FIND_FILE,$(SRC)/,*.svg))
+ALL_JS_FILES		:=	$(filter-out %.min.js,$(call FIND_FILE,$(ROOT),*.js))
+ALL_LESS_FILES		:=	$(filter-out %.min.less,$(call FIND_FILE,$(ROOT),*.less))
+ALL_CSS_FILES		:=	$(filter-out %.min.css,$(call FIND_FILE,$(ROOT),*.css))
+ALL_SVG_FILES		:=	$(filter-out %.min.svg,$(call FIND_FILE,$(ROOT),*.svg))
 
-ALL_ESIGNORE_FILES	:=	$(call FIND_FILE,$(SRC)/,.esignore)
+ALL_ESIGNORE_FILES	:=	$(call FIND_FILE,$(ROOT),.esignore)
 ESIGNORE_FOLDERS	:=	$(addsuffix %,$(dir $(ALL_ESIGNORE_FILES)))
 
 # Transforms #
