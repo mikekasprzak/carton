@@ -219,7 +219,11 @@ OUT_MAIN_JS			:=	$(subst $(SRC)/,$(OUT)/,$(MAIN_JS:.js=.es.js))
 
 # JavaScript #
 $(BUILD_FOLDER)/js.js: $(OUT_JS_FILES)
+ifneq ($(OUT_JS_FILES),)
 	cat $^ > $@
+else
+	touch $@
+endif # OUT_JS_FILES
 $(BUILD_FOLDER)/buble.js: $(OUT_MAIN_JS) $(OUT_ES_FILES)
 	$(call ROLLUP,$<,$@.tmp)
 	rm -f $@
