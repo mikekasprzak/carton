@@ -36,7 +36,7 @@ endif # SOURCEMAPS
 #ifdef INCLUDE_FOLDERS
 #INCLUDE_FOLDERS		+=	src/compat/
 #endif # INCLUDE_FOLDERS
-INCLUDE_FOLDERS		?=	$(SRC)/
+INCLUDE_FOLDERS		?=	$(TARGET)/src/
 BUILD_FOLDER		:=	$(OUT)/$(.BUILD)
 
 # Functions (must use '=', and not ':=') #
@@ -61,11 +61,11 @@ LESS_FILES			:=	$(ALL_LESS_FILES)
 CSS_FILES			:=	$(ALL_CSS_FILES)
 SVG_FILES			:=	$(ALL_SVG_FILES)
 
-OUT_ES_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(ES_FILES:.js=.es.js))
-OUT_JS_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(JS_FILES:.js=.o.js))
-OUT_LESS_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(LESS_FILES:.less=.less.css))
-OUT_CSS_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(CSS_FILES:.css=.o.css))
-OUT_SVG_FILES		:=	$(subst $(SRC)/,$(OUT)/,$(SVG_FILES:.svg=.min.svg))
+OUT_ES_FILES		:=	$(subst $(ROOT)/,$(OUT)/,$(ES_FILES:.js=.es.js))
+OUT_JS_FILES		:=	$(subst $(ROOT)/,$(OUT)/,$(JS_FILES:.js=.o.js))
+OUT_LESS_FILES		:=	$(subst $(ROOT)/,$(OUT)/,$(LESS_FILES:.less=.less.css))
+OUT_CSS_FILES		:=	$(subst $(ROOT)/,$(OUT)/,$(CSS_FILES:.css=.o.css))
+OUT_SVG_FILES		:=	$(subst $(ROOT)/,$(OUT)/,$(SVG_FILES:.svg=.min.svg))
 
 OUT_FILES_SVG		:=	$(strip $(OUT_SVG_FILES))
 OUT_FILES_CSS		:=	$(strip $(OUT_CSS_FILES) $(OUT_LESS_FILES))
@@ -118,7 +118,7 @@ MINIFY_JS_ARGS		:=	--compress --mangle -r "$(MINIFY_JS_RESERVED)"
 MINIFY_JS			=	$(NODEJS)/uglify-js/bin/uglifyjs $(MINIFY_JS_ARGS) -o $(2) -- $(1)
 
 # CSS Compiler: http://lesscss.org/
-LESS_COMMON			:=	--global-var='STATIC_DOMAIN=$(STATIC_DOMAIN)' --include-path=$(SRC)
+LESS_COMMON			:=	--global-var='STATIC_DOMAIN=$(STATIC_DOMAIN)' --include-path=$(ROOT)
 LESS_ARGS			:=	--autoprefix
 LESS_DEP			=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) --depends $(1) $(2)>$(2).dep
 LESS				=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) $(LESS_ARGS) $(1) $(2)
@@ -186,19 +186,19 @@ endif # ES_FILES
 
 
 # File Rules #
-$(OUT)/%.es.js:$(SRC)/%.js
+$(OUT)/%.es.js:$(ROOT)/%.js
 	$(call BUBLE,$<,$@)
 
-$(OUT)/%.o.js:$(SRC)/%.js
+$(OUT)/%.o.js:$(ROOT)/%.js
 	cp $< $@
 
-$(OUT)/%.less.css:$(SRC)/%.less
+$(OUT)/%.less.css:$(ROOT)/%.less
 	$(call LESS,$<,$@); $(call LESS_DEP,$<,$@)
 
-$(OUT)/%.o.css:$(SRC)/%.css
+$(OUT)/%.o.css:$(ROOT)/%.css
 	cp $< $@
 
-$(OUT)/%.min.svg:$(SRC)/%.svg
+$(OUT)/%.min.svg:$(ROOT)/%.svg
 	$(call SVGO,$<,$@)
 
 
@@ -215,7 +215,7 @@ clean-js:
 	-$(call RM_EMPTY_DIRS,.output)
 
 
-OUT_MAIN_JS			:=	$(subst $(SRC)/,$(OUT)/,$(MAIN_JS:.js=.es.js))
+OUT_MAIN_JS			:=	$(subst $(ROOT)/,$(OUT)/,$(MAIN_JS:.js=.es.js))
 
 
 # JavaScript #
@@ -292,6 +292,7 @@ target: $(OUT_FOLDERS) $(BUILD_FOLDER)/buble.lint $(BUILD_FOLDER)/less.lint $(TA
 
 
 info:
+	@echo "ROOT: $(ROOT)"
 	@echo "SRC: $(SRC)"
 	@echo "OUT: $(OUT)"
 	@echo ""
