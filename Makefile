@@ -28,6 +28,7 @@ endif # SOURCEMAPS
 # Input Dirs (modified by recursive scripts) #
 INPUT_DIRS			?=	$(TARGET)/src/
 INPUT_DIRS			:=	$(addprefix $(ROOT),$(INPUT_DIRS))
+ESLINT_IGNORE		:=	$(addprefix $(ROOT),$(ESLINT_IGNORE))
 BUILD_DIR			:=	$(OUT)/.build
 
 # Functions (must use '=', and not ':=') #
@@ -165,7 +166,7 @@ clean-lint:
 	rm -fr $(BUILD_DIR)/buble.lint $(BUILD_DIR)/less.lint
 
 
-$(BUILD_DIR)/buble.lint: $(ES_FILES)
+$(BUILD_DIR)/buble.lint: $(filter $(addsuffix %,$(ESLINT_IGNORE)),$(ES_FILES))
 	$(call ESLINT,$?)
 	@touch $@
 

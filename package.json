@@ -10,6 +10,7 @@
     "es6-promise": "*",
     "eslint": "*",
     "eslint-plugin-react": "*",
+    "babel-eslint": "*",
     "nodent": "*",
     "rollup": "*",
     "rollup-plugin-includepaths": "*",
