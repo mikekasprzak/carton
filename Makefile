@@ -19,30 +19,17 @@ NODEJS				?=	node_modules
 
 # if JOBS are specified in config.mk, then use that to start a parallel build
 ifdef JOBS
-ifndef MAIN_FOLDER
 $(info [*] Running with $(JOBS) JOBS)
-endif # MAIN_FOLDER
 JOBS				:=	-j $(JOBS)
 endif # JOBS
 
-ifndef MAIN_FOLDER
 ifdef DEBUG
 $(info [*] Debug output enabled)
 endif # DEBUG
-endif # MAIN_FOLDER
 
-ifndef MAIN_FOLDER
 ifdef SOURCEMAPS
 $(info [*] Source Maps enabled)
 endif # SOURCEMAPS
-endif # MAIN_FOLDER
-
-## Copy un-minified files
-#ifdef WINDOWS_HOST
-#ifndef MAIN_FOLDER
-#$(info [*] Running on WINDOWS_HOST)
-#endif # MAIN_FOLDER
-#endif # WINDOWS_HOST
 
 # Include Folders (modified by recursive scripts) #
 #ifdef INCLUDE_FOLDERS
@@ -122,7 +109,7 @@ MINIFY_JS_ARGS		:=	--compress --mangle -r "$(MINIFY_JS_RESERVED)"
 MINIFY_JS			=	$(NODEJS)/uglify-js/bin/uglifyjs $(MINIFY_JS_ARGS) -o $(2) -- $(1)
 
 # CSS Compiler: http://lesscss.org/
-LESS_COMMON			:=	--global-var='STATIC_DOMAIN=$(STATIC_DOMAIN)' --include-path=$(MAIN_FOLDER)
+LESS_COMMON			:=	--global-var='STATIC_DOMAIN=$(STATIC_DOMAIN)' --include-path=$(SRC)
 LESS_ARGS			:=	--autoprefix
 LESS_DEP			=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) --depends $(1) $(2)>$(2).dep
 LESS				=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) $(LESS_ARGS) $(1) $(2)
@@ -160,69 +147,6 @@ report: $(TARGET_FILES)
 		"[CSS]     GZIP: `$(call GZIP_SIZE,$(TARGET_FOLDER)/out.min.css 2>/dev/null)`  MINIFY: `$(call SIZE,$(TARGET_FOLDER)/out.min.css 2>/dev/null)`	ORIGINAL: `$(call SIZE,$(BUILD_FOLDER)/all.css 2>/dev/null)`\n" \
 		"[SVG]     GZIP: `$(call GZIP_SIZE,$(TARGET_FOLDER)/out.min.svg 2>/dev/null)`  MINIFY: `$(call SIZE,$(TARGET_FOLDER)/out.min.svg 2>/dev/null)`	ORIGINAL: `$(call SIZE,$(BUILD_FOLDER)/all.svg 2>/dev/null)`\n" \
 		| column -t
-
-# If not called recursively, figure out who the targes are and call them #
-ifndef MAIN_FOLDER # ---- #
-
-# MAKEFILES is a reserved word, so we're using THE_MAKEFILES
-THE_MAKEFILES		?=	$(call FIND_FILE,$(SRC)/,Makefile)
-BUILDS				:=	$(subst $(SRC)/,$(OUT)/$(.BUILD)/,$(THE_MAKEFILES))
-ALL_MAKEFILES		:=	$(call FIND_FILE,$(SRC)/,Makefile)
-ALL_BUILDS			:=	$(subst $(SRC)/,$(OUT)/$(.BUILD)/,$(ALL_MAKEFILES))
-
-
-# Recursively re-call this makefile for all TARGETs
-clean:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) clean -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-svg:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) clean-svg -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-css:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) clean-css -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-js:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) clean-js -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-lint:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) clean-lint -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-
-clean-all:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) clean -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-all-svg:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) clean-svg -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-all-css:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) clean-css -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-all-js:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) clean-js -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-clean-all-lint:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) clean-lint -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-
-lint: lint-svg lint-css lint-js lint-php
-lint-svg:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) lint-svg -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-lint-css:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) lint-css -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-lint-js:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) lint-js -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-lint-php:
-	@$(foreach b,$(THE_MAKEFILES),$(MAKE) lint-php -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-
-lint-all: lint-all-svg lint-all-css lint-all-js lint-all-php
-lint-all-svg:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) lint-svg -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-lint-all-css:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) lint-css -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-lint-all-js:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) lint-js -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-lint-all-php:
-	@$(foreach b,$(ALL_MAKEFILES),$(MAKE) lint-php -r --no-print-directory -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$(b));)
-
-
-all: $(ALL_BUILDS)
-target: $(BUILDS)
-
-$(ALL_BUILDS):
-	@echo "[+] Building \"$(subst /Makefile,,$(subst $(OUT)/$(.BUILD)/,,$@))\"..."
-	@$(MAKE) --no-print-directory $(JOBS) -C . -f $(subst $(OUT)/$(.BUILD)/,$(SRC)/,$@)
-
-else # MAIN_FOLDER # ---- #
 
 # Folder Rules #
 $(OUT_FOLDERS):
@@ -341,9 +265,6 @@ $(TARGET_FOLDER)/out.min.svg: $(BUILD_FOLDER)/all.svg
 # Target #
 target: $(OUT_FOLDERS) $(BUILD_FOLDER)/buble.lint $(BUILD_FOLDER)/less.lint $(TARGET_FILES) report
 	@echo "[-] Done \"$(subst /,,$(TARGET))\""
-
-endif # MAIN_FOLDER # ---- #
-
 
 
 # Phony Rules #
