@@ -107,8 +107,7 @@ ROLLUP				=	$(NODEJS)/rollup/bin/rollup $(ROLLUP_ARGS) $(1) > $(2)
 JS_PP_DEBUG			=	$(NODEJS)/preprocess-cli-tool/bin/preprocess.js -f $(1) -d $(2) -c '{"DEBUG": true}' -t js
 JS_PP_RELEASE		=	$(NODEJS)/preprocess-cli-tool/bin/preprocess.js -f $(1) -d $(2) -t js
 # JS Minifier: https://github.com/mishoo/UglifyJS2
-MINIFY_JS_RESERVED	:=	VERSION_STRING,STATIC_DOMAIN
-MINIFY_JS_ARGS		:=	--compress --mangle -r "$(MINIFY_JS_RESERVED)"
+MINIFY_JS_ARGS		:=	--compress --mangle --mangle-props --toplevel --source-map
 MINIFY_JS			=	$(NODEJS)/uglify-js/bin/uglifyjs $(MINIFY_JS_ARGS) -o $(2) -- $(1)
 
 # CSS Compiler: http://lesscss.org/
