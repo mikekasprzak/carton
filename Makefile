@@ -166,7 +166,7 @@ clean-lint:
 	rm -fr $(BUILD_DIR)/buble.lint $(BUILD_DIR)/less.lint
 
 
-$(BUILD_DIR)/buble.lint: $(filter $(addsuffix %,$(ESLINT_IGNORE)),$(ES_FILES))
+$(BUILD_DIR)/buble.lint: $(filter-out $(addsuffix %,$(ESLINT_IGNORE)),$(ES_FILES))
 	$(call ESLINT,$?)
 	@touch $@
 
