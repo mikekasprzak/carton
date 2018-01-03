@@ -1,9 +1,9 @@
-ee := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+ROOT_DIR			:= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 cat:
-	echo "tam: $(ee)"
+	echo "tam: $(ROOT_DIR)"
 
--include config.mk	# Create and use this file to override any of 'Settings' #
+-include $(ROOT_DIR)/config.mk	# Create and use this file to override any of 'Settings' #
 
 # Settings #
 SRC					?=	src
