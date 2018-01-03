@@ -7,7 +7,7 @@ CARTON_DIR			:= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 -include $(CARTON_DIR)/config.mk	# Create and use this file to override any of 'Settings' #
 
 # Settings #
-ROOT				?=	../
+ROOT				?=	..
 OUT					?=	.output
 NODEJS				?=	$(CARTON_DIR)/node_modules
 
@@ -27,9 +27,9 @@ endif # SOURCEMAPS
 
 # Input Dirs (modified by recursive scripts) #
 INPUT_DIRS			?=	$(TARGET)/src/
-INPUT_DIRS			:=	$(addprefix $(ROOT),$(INPUT_DIRS))
-JS_LINT_IGNORE		:=	$(addprefix $(ROOT),$(JS_LINT_IGNORE) $(LINT_IGNORE))
-CSS_LINT_IGNORE		:=	$(addprefix $(ROOT),$(CSS_LINT_IGNORE) $(LINT_IGNORE))
+INPUT_DIRS			:=	$(addprefix $(ROOT)/,$(INPUT_DIRS))
+JS_LINT_IGNORE		:=	$(addprefix $(ROOT)/,$(JS_LINT_IGNORE) $(LINT_IGNORE))
+CSS_LINT_IGNORE		:=	$(addprefix $(ROOT)/,$(CSS_LINT_IGNORE) $(LINT_IGNORE))
 BUILD_DIR			:=	$(OUT)/.build
 
 # Functions (must use '=', and not ':=') #
