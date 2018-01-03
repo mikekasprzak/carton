@@ -172,7 +172,9 @@ endif # ES_FILES
 
 
 $(BUILD_FOLDER)/less.lint: $(LESS_FILES)
+ifneq ($(LESS_FILES),)
 	$(call STYLELINT,$?)
+endif # ES_FILES
 	@touch $@
 
 
