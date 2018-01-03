@@ -8,7 +8,7 @@ CARTON_DIR			:= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 # Settings #
 SRC					?=	src
-OUT					?=	./
+OUT					?=	.output
 .BUILD				?=	.build
 NODEJS				?=	node_modules
 
