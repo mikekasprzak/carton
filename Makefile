@@ -1,7 +1,7 @@
 ee := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 cat:
-	echo "tam: $ee"
+	echo "tam: $(ee)"
 
 -include config.mk	# Create and use this file to override any of 'Settings' #
 
