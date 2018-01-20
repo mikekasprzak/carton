@@ -285,6 +285,8 @@ out.min.svg: $(BUILD_DIR)/all.svg
 target: $(OUT_DIRS) $(BUILD_DIR)/buble.lint $(BUILD_DIR)/less.lint $(TARGET_FILES) report
 	@echo "[-] Done \"$(subst /,,$(TARGET))\""
 
+run:
+	php -S localhost:8000
 
 info:
 	@echo "ROOT: $(ROOT)"
@@ -299,7 +301,7 @@ info:
 	@echo "JS: $(JS_FILES)"
 
 # Phony Rules #
-.PHONY: default info build target all clean clean-all clean-target clean-lint clean-svg clean-css clean-js clean-all-svg clean-all-css clean-all-js lint lint-all lint-svg lint-css lint-js lint-php lint-all-svg lint-all-css lint-all-js lint-all-php fail report $(BUILDS)
+.PHONY: default info run build target all clean clean-all clean-target clean-lint clean-svg clean-css clean-js clean-all-svg clean-all-css clean-all-js lint lint-all lint-svg lint-css lint-js lint-php lint-all-svg lint-all-css lint-all-js lint-all-php fail report $(BUILDS)
 
 
 # Dependencies #
