@@ -112,7 +112,7 @@ MINIFY_JS_ARGS		:=	--compress --mangle #--mangle-props reserved=['cN'] --topleve
 MINIFY_JS			=	$(NODEJS)/uglify-es/bin/uglifyjs $(MINIFY_JS_ARGS) -o $(2) -- $(1)
 
 # CSS Compiler: http://lesscss.org/
-LESS_COMMON			:=	--global-var='STATIC_DOMAIN=$(STATIC_DOMAIN)' --include-path=$(ROOT)
+LESS_COMMON			:=	--global-var='STATIC_DOMAIN=$(STATIC_DOMAIN)' --include-path=$(ROOT) --include-path=$(ROOT)/external
 LESS_ARGS			:=	--autoprefix
 LESS_DEP			=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) --depends $(1) $(2)>$(2).dep
 LESS				=	$(NODEJS)/less/bin/lessc $(LESS_COMMON) $(LESS_ARGS) $(1) $(2)
