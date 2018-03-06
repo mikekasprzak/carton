@@ -20,7 +20,7 @@
     "uglify-es": "*",
     "preprocess-cli-tool": "*",
 
-    "less": "*",
+    "less": "^2.0.0",
     "less-plugin-autoprefix": "*",
     "clean-css-cli": "*",
     "stylelint": "^8.3.1",

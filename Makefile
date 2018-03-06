@@ -187,7 +187,7 @@ $(OUT)/%.o.js:$(ROOT)/%.js
 	cp $< $@
 
 $(OUT)/%.less.css:$(ROOT)/%.less
-	(cd $(CARTON_DIR) && $(call LESS,$<,$@); $(call LESS_DEP,$<,$@))
+	$(call LESS,$<,$@); $(call LESS_DEP,$<,$@)
 
 $(OUT)/%.o.css:$(ROOT)/%.css
 	cp $< $@
